@@ -9,14 +9,9 @@ const initialValues = {
     password: '',
 };
 
-const initialErrorValues = {
-    error: ''
-}
-
 const Login = () => {
     const { push } = useHistory();
     const [formValues, setFormValues] = useState(initialValues);
-    const [errorValues, setErrorValues] = useState(initialErrorValues)
 
     const onChange = (e) => {
         setFormValues({
@@ -32,7 +27,7 @@ const Login = () => {
                 push('/view');
             })
             .catch(err => {
-                setErrorValues(err.response.data.error)
+                console.error(err.response.data.error)
             })
     }
     
@@ -40,7 +35,7 @@ const Login = () => {
         <ModalContainer>
             <h1>Welcome to Blogger Pro</h1>
             <h2>Please enter your account information.</h2>
-            <FormGroup id="submit" onSubmit={onSubmit}>
+            <FormGroup onSubmit={onSubmit}>
                 <Label>Username:
                     <Input
                         id="username"
@@ -59,9 +54,9 @@ const Login = () => {
                         onChange={onChange}
                     />
                 </Label>
-                <Button>Login</Button>
-            </FormGroup>
-            <p id="error">{errorValues.error}</p>
+                <Button id="submit">Login</Button>
+            </FormGroup> 
+            <p id="error">error</p>
         </ModalContainer>
     </ComponentContainer>);
 }
