@@ -6,18 +6,6 @@ const articleService = ()=> {
 
     axiosWithAuth()
         .get('/api/articles')
-        .then(res => {
-            setArticles(res.data);
-        })
-        .catch(err => {
-            console.error(err)
-        })
-
-    return (
-        <div>{articles.map(article => (
-            <h3>{articles.headline}</h3>
-        ))}</div>
-    )
 }
 
 export default articleService;
