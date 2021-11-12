@@ -1,12 +1,67 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
+import { response } from 'msw';
+
+const initialValues = {
+    username: '',
+    password: '',
+};
+
+const initialErrorValues = {
+    error: ''
+}
 
 const Login = () => {
+    const { push } = useHistory();
+    const [formValues, setFormValues] = useState(initialValues);
+    const [errorValues, setErrorValues] = useState(initialErrorValues)
+
+    const onChange = (e) => {
+        setFormValues({
+            ...formValues, [e.target.name]: e.target.value
+        })
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        axios.post('http://localhost:5001/api/login', formValues)
+            .then(res => {
+                localStorage.setItem('token', res.data.token)
+                push('/view');
+            })
+            .catch(err => {
+                setErrorValues(err.response.data.error)
+            })
+    }
     
     return(<ComponentContainer>
         <ModalContainer>
             <h1>Welcome to Blogger Pro</h1>
             <h2>Please enter your account information.</h2>
+            <FormGroup id="submit" onSubmit={onSubmit}>
+                <Label>Username:
+                    <Input
+                        id="username"
+                        type='text'
+                        name='username'
+                        value={formValues.username}
+                        onChange={onChange}
+                    />
+                </Label>
+                <Label>Password:
+                    <Input
+                        id="password"
+                        type='password'
+                        name='password'
+                        value={formValues.password}
+                        onChange={onChange}
+                    />
+                </Label>
+                <Button>Login</Button>
+            </FormGroup>
+            <p id="error">{errorValues.error}</p>
         </ModalContainer>
     </ComponentContainer>);
 }
