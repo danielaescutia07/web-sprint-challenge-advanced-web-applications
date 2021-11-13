@@ -12,6 +12,7 @@ const initialValues = {
 const Login = () => {
     const { push } = useHistory();
     const [formValues, setFormValues] = useState(initialValues);
+    const [error, setError] = useState('');
 
     const onChange = (e) => {
         setFormValues({
@@ -27,7 +28,7 @@ const Login = () => {
                 push('/view');
             })
             .catch(err => {
-                console.error(err.response.data.error)
+                setError(err.response.data.error)
             })
     }
     
@@ -56,7 +57,7 @@ const Login = () => {
                 </Label>
                 <Button id="submit">Login</Button>
             </FormGroup> 
-            <p id="error">error</p>
+            <p id="error">{error}</p>
         </ModalContainer>
     </ComponentContainer>);
 }

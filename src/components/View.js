@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Article from './Article';
@@ -8,6 +9,10 @@ import articleService from '../services/articleServices';
 import axiosWithAuth from '../utils/axiosWithAuth';
 
 const View = (props) => {
+    
+    const { push } = useHistory();
+    const { id } = useParams();
+
     const [articles, setArticles] = useState([]);
     const [editing, setEditing] = useState(false);
     const [editId, setEditId] = useState();
@@ -37,6 +42,7 @@ const View = (props) => {
     }
 
     const handleEdit = (article) => {
+
     }
 
     const handleEditSelect = (id)=> {

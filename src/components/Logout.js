@@ -1,6 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import axiosWithAuth from '../utils/axiosWithAuth';
 
-const Logout = () => {        
+const Logout = () => {
+
+    useEffect(() => {
+        axiosWithAuth()
+            .post(`/api/logout`)
+            .then(res => {
+                delete(res.data.token);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    })
+
     return(<div></div>);
 }
 
